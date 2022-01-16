@@ -1,0 +1,6 @@
+{
+  "base": "https://fakestoreapi.com/",
+  "endpoint": {
+    "products": "/products"
+  }
+}
