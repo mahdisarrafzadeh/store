@@ -5,6 +5,10 @@ import { productActionCreator } from '../../redux/action/products.action';
 import { selectProduct, selectProductIsFetching } from '../../redux/selectors/product.selector';
 import ReactStars from 'react-stars'
 import { Loading } from '../../components/loading';
+import Meta from '../../components/Meta';
+import { MdOutlineLightMode } from "react-icons/md";
+import Button from '../../components/Button/Button';
+import { IoChevronBackOutline } from "react-icons/io5";
 
 interface Props {
 
@@ -17,7 +21,6 @@ const Products = (props: Props) => {
     const dispatch = useDispatch();
     const router = useRouter()
     const { id } = router.query
-    const handleRating1 = (rate: number) => setRating(rate)
 
     useEffect(() => {
         if (id) {
@@ -29,12 +32,15 @@ const Products = (props: Props) => {
         return <Loading loading={isFetching} />
     } else
         return (
-            <div className='container flex text-stone-700  h-screen flex-col md:flex-row'>
+            <div className='container flex bg-gray-50 p-2 md:p-4 text-stone-700  h-screen flex-col md:flex-row'>
+                <Meta title={product?.title ? product.title : "undefined"} desc={product?.description ? product.description : "undefined"} />
+                <Button href='/' pill className='absolute w-12 bg-transparent text-blue-500 hover:text-white' type='primary'> Back</Button>
                 <div className='flex items-center  p-2  md:w-2/4 justify-center'>
-                    <img src={product?.image ? product.image : ""} className='md:w-96 w-64 p-4' />
+                    <img src={product?.image} className='md:w-96 w-64 p-4' />
                 </div>
                 <div className='flex flex-col    justify-center font-bold p-8 '>
-                    <div className=' flex space-y-5  justify-start h-96 flex-col p-4 rounded-lg md:bg-gray-100 md:shadow-md'>
+
+                    <div className=' flex space-y-5  justify-start h-96 flex-col p-4 rounded-lg dark:bg-gray-800 md:bg-gray-100 md:shadow-md'>
                         <div className='md:inline-flex text-sm justify-between '>
                             <span>
                                 <h1 className='text-xl'>{product?.title}</h1>
