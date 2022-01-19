@@ -7,16 +7,19 @@ import { Header } from '../components/header'
 import { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { productsActionCreator } from '../redux/action/products.action'
-import { selectProducts } from '../redux/selectors/product.selector'
+import { selectProducts, selectProductsIsFetching } from '../redux/selectors/product.selector'
 import ReactStars from 'react-stars'
 import Button from '../components/Button/Button'
 import { AiOutlineWhatsApp } from "react-icons/ai";
 import { ImTelegram } from "react-icons/im";
+import { Loading } from '../components/loading'
 
 
 const Home: NextPage = () => {
   const dispatch = useDispatch()
   const products = useSelector(selectProducts)
+  const productsIsFetching = useSelector(selectProductsIsFetching)
+
   useEffect(() => {
     dispatch(productsActionCreator())
   }, [])
@@ -36,7 +39,7 @@ const Home: NextPage = () => {
 
       <main className={styles.main}>
         <div className='grid sm:grid-cols-2 md:grid-cols-4 gap-4 right-auto left-auto space-x-16 space-y-16 '>
-          {products?.map((item, index) => {
+          {productsIsFetching ? <Loading loading={productsIsFetching} /> : products?.map((item, index) => {
             return (
               <div key={item.id} className='flex flex-col items-center w-64 shadow-md rounded-md '>
                 <div><img src={item.image} alt='' className='w-40 h-56' /></div>
@@ -68,6 +71,7 @@ const Home: NextPage = () => {
               </div>
             )
           })}
+
         </div>
       </main>
 
